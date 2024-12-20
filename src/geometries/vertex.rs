@@ -1,8 +1,8 @@
 use std::fmt::Display;
 
 pub struct Vertex {
-    latitude: f64,
-    longitude: f64
+    pub latitude: f64,
+    pub longitude: f64
 }
 
 impl Vertex {
