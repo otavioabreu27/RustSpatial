@@ -1,0 +1,47 @@
+name: Code Coverage Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt
+
+      - name: Install tarpaulin
+        run: cargo install cargo-tarpaulin
+
+      - name: Run Tarpaulin
+        id: tarpaulin
+        run: |
+          cargo tarpaulin --out Json --fail-under 90
+
+      - name: Upload Tarpaulin Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: tarpaulin-report
+          path: tarpaulin-report.json
+
+      - name: Verify Coverage
+        if: success()
+        run: |
+          coverage=$(grep -Po '"coverage":\s\K[0-9.]+' tarpaulin-report.json | head -1)
+          echo "Code coverage is ${coverage}%"
+          if (( $(echo "$coverage < 90.0" | bc -l) )); then
+            echo "Code coverage is below 90% (Actual: ${coverage}%)"
+            exit 1
+          fi
