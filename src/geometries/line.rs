@@ -1,6 +1,4 @@
-use std::{f64::consts::PI, fmt::Display};
-
-use crate::consts::EARTH_RADIUS_KM;
+use std::fmt::Display;
 
 use super::vertex::Vertex;
 
@@ -13,7 +11,7 @@ pub struct Line {
 impl Line {
     /// Cria uma nova linha entre dois vértices.
     pub fn new(starting_vertex: Vertex, ending_vertex: Vertex) -> Result<Self, String> {
-        if !Self::line_is_valid(&starting_vertex, &ending_vertex) {
+        if !Self::vertexes_are_different(&starting_vertex, &ending_vertex) {
             Err(format!(
                 "Os vértices de entrada e saída são iguais: Entrada: {}; Saída: {}",
                 starting_vertex, ending_vertex
@@ -27,37 +25,8 @@ impl Line {
     }
 
     /// Verifica se os vértices de início e fim são diferentes.
-    fn line_is_valid(starting_vertex: &Vertex, ending_vertex: &Vertex) -> bool {
-        starting_vertex != ending_vertex
-    }
-
-    /// Converte graus para radianos.
-    fn degrees_to_radians(degree: f64) -> f64 {
-        degree * PI / 180.0
-    }
-
-    /// Calcula a distância da linha usando a fórmula de Haversine.
-    pub fn calculate_earth_radius_distance(&self) -> f64 {
-        let lat1_rad = Self::degrees_to_radians(self.starting_vertex.latitude);
-        let lat2_rad = Self::degrees_to_radians(self.ending_vertex.latitude);
-        let lon1_rad = Self::degrees_to_radians(self.starting_vertex.longitude);
-        let lon2_rad = Self::degrees_to_radians(self.ending_vertex.longitude);
-
-        let dist_lat = lat2_rad - lat1_rad;
-        let dist_lon = lon2_rad - lon1_rad;
-
-        let a = (dist_lat / 2.0).sin().powi(2)
-            + lat1_rad.cos() * lat2_rad.cos() * (dist_lon / 2.0).sin().powi(2);
-        let c = 2.0 * a.sqrt().atan2((1.0 - a).sqrt());
-
-        EARTH_RADIUS_KM * c
-    }
-
-    /// Calcula a distância euclidiana em 2D.
-    pub fn calculate_euclidean_distance(&self) -> f64 {
-        let dx = self.ending_vertex.latitude - self.starting_vertex.latitude;
-        let dy = self.ending_vertex.longitude - self.starting_vertex.longitude;
-        (dx * dx + dy * dy).sqrt()
+    fn vertexes_are_different(starting_vertex: &Vertex, ending_vertex: &Vertex) -> bool {
+        !starting_vertex.is_equal(ending_vertex)
     }
 }
 

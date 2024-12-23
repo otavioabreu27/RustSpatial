@@ -13,6 +13,11 @@ impl Vertex {
             longitude,
         }
     }
+
+    // Compara o vertice com outro
+    pub fn is_equal(&self, other_vertex: &Vertex) -> bool {
+        self == other_vertex
+    }
 }
 
 impl Display for Vertex {

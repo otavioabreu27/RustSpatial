@@ -1,1 +1,8 @@
+// Haversine
 pub const EARTH_RADIUS_KM: f64 = 6371.0;
+pub const EARTH_RADIUS_METERS: f64 = 6378137.0;
+
+// Vicenty WGS-84
+pub const SEMI_MAJOR_AXIS_LENGTH: f64 = 6378137.0;
+pub const FLATTENING: f64 = 1.0 / 298.257223563;
+pub const SEMI_MINOR_AXIS_LENGTH: f64 = SEMI_MAJOR_AXIS_LENGTH * (1.0 - FLATTENING);
