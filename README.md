@@ -1,6 +1,6 @@
-<img src="https://github.com/otavioabreu27/GeoRust/blob/main/media/icon.png" align="right" width="64"/>
+<img src="https://github.com/otavioabreu27/RustSpatial/blob/main/media/icon.png" align="right" width="64"/>
 
-# GeoRust
+# RustSpatial
 
 <!-- badges: start -->
 <div style="display: flex; justify-content: center; gap: 5px;">
@@ -10,7 +10,7 @@
 
 ## Summary
 
-Rust implementation of Geographic and Vetorial structures and operations. Focused on memory and thread safety and multithread processing.
+Rust native implementation of Geographic and Vetorial structures and operations. Focused on memory and thread safety and multithread processing.
 
 
 ## Features
